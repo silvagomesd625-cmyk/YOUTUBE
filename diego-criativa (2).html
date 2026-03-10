@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diego Criativa – Soluções Digitais</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cyan: #00f5ff;
+    --gold: #ffd700;
+    --purple: #a855f7;
+    --dark: #030712;
+    --dark2: #0a0f1e;
+    --dark3: #0d1530;
+    --neon-green: #39ff14;
+    --red: #ff3b3b;
+    --white: #e8f4ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Exo 2', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,245,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,245,255,.15) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(168,85,247,.12) 0%, transparent 60%);
+  }
+
+  /* Animated orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: .18;
+    animation: drift 8s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  .orb1 { width:500px;height:500px;background:var(--cyan);top:-100px;left:-150px;animation-duration:9s; }
+  .orb2 { width:400px;height:400px;background:var(--purple);bottom:-50px;right:-100px;animation-duration:11s;animation-delay:-4s; }
+  .orb3 { width:300px;height:300px;background:var(--gold);bottom:30%;left:10%;animation-duration:7s;animation-delay:-2s;opacity:.1; }
+  @keyframes drift { from{transform:translate(0,0) scale(1)} to{transform:translate(40px,30px) scale(1.1)} }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .logo-badge {
+    display: inline-block;
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(52px, 12vw, 100px);
+    font-weight: 900;
+    letter-spacing: 6px;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--cyan);
+    text-shadow: 0 0 30px var(--cyan), 0 0 60px rgba(0,245,255,.4);
+    animation: flicker 4s ease-in-out infinite;
+  }
+  @keyframes flicker {
+    0%,95%,100%{opacity:1} 96%{opacity:.85} 97%{opacity:1} 98%{opacity:.9}
+  }
+
+  .brand-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(14px, 3.5vw, 22px);
+    font-weight: 700;
+    letter-spacing: 10px;
+    color: var(--white);
+    text-transform: uppercase;
+    margin-top: 2px;
+    opacity: .85;
+  }
+
+  .tagline-bar {
+    margin: 16px auto 0;
+    display: inline-block;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: clamp(16px, 4vw, 26px);
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+  .hero-desc {
+    margin-top: 12px;
+    font-size: clamp(13px, 2.5vw, 16px);
+    color: rgba(232,244,255,.6);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    margin-top: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 16px 36px;
+    border-radius: 50px;
+    box-shadow: 0 0 30px rgba(37,211,102,.4), inset 0 1px 0 rgba(255,255,255,.2);
+    transition: transform .2s, box-shadow .2s;
+    letter-spacing: 1px;
+  }
+  .hero-cta:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 0 50px rgba(37,211,102,.6); }
+  .hero-cta svg { flex-shrink: 0; }
+
+  /* ── SECTION BASE ── */
+  section { position: relative; z-index: 1; }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(20px, 5vw, 32px);
+    font-weight: 700;
+    color: var(--cyan);
+    text-shadow: 0 0 20px var(--cyan);
+    margin-bottom: 8px;
+  }
+  .section-subtitle {
+    text-align: center;
+    color: rgba(232,244,255,.5);
+    font-size: 14px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── PACKAGES ── */
+  .packages {
+    padding: 80px 20px;
+    background: linear-gradient(180deg, transparent, var(--dark2), transparent);
+  }
+
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .pkg-card {
+    position: relative;
+    border-radius: 20px;
+    padding: 36px 28px 32px;
+    background: linear-gradient(145deg, rgba(13,21,48,.9), rgba(10,15,30,.95));
+    border: 1px solid rgba(0,245,255,.15);
+    overflow: hidden;
+    transition: transform .3s, box-shadow .3s;
+    cursor: default;
+  }
+  .pkg-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(0,245,255,.06), transparent 60%);
+    pointer-events: none;
+  }
+  .pkg-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0,245,255,.15), 0 0 0 1px rgba(0,245,255,.3);
+  }
+
+  .pkg-card.featured {
+    border-color: rgba(255,215,0,.35);
+    background: linear-gradient(145deg, rgba(30,20,5,.95), rgba(20,15,5,.98));
+  }
+  .pkg-card.featured::before {
+    background: linear-gradient(135deg, rgba(255,215,0,.08), transparent 60%);
+  }
+  .pkg-card.featured:hover {
+    box-shadow: 0 20px 60px rgba(255,215,0,.18), 0 0 0 1px rgba(255,215,0,.4);
+  }
+
+  .pkg-badge {
+    position: absolute;
+    top: -1px; right: 24px;
+    background: linear-gradient(90deg, var(--gold), #ff9f00);
+    color: #000;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 12px rgba(255,215,0,.3);
+  }
+
+  .pkg-icon { font-size: 40px; margin-bottom: 16px; display: block; }
+
+  .pkg-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cyan);
+    margin-bottom: 4px;
+  }
+  .pkg-card.featured .pkg-name { color: var(--gold); }
+
+  .pkg-subs {
+    font-size: 13px;
+    color: rgba(232,244,255,.6);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .pkg-subs::before { content:'✔'; color: var(--neon-green); font-size: 12px; }
+
+  .pkg-price {
+    font-family: 'Orbitron', monospace;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--white);
+  }
+  .pkg-price span { font-size: 22px; vertical-align: super; margin-right: 2px; color: var(--cyan); }
+  .pkg-price small { font-size: 12px; display: block; color: rgba(232,244,255,.4); margin-top: 4px; letter-spacing: 1px; }
+
+  .pkg-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,245,255,.2), transparent);
+    margin: 20px 0;
+  }
+  .pkg-card.featured .pkg-divider {
+    background: linear-gradient(90deg, transparent, rgba(255,215,0,.25), transparent);
+  }
+
+  .pkg-features { list-style: none; margin-bottom: 28px; }
+  .pkg-features li {
+    padding: 7px 0;
+    font-size: 14px;
+    color: rgba(232,244,255,.75);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pkg-features li::before { content:'→'; color: var(--cyan); font-size: 13px; flex-shrink:0; }
+  .pkg-card.featured .pkg-features li::before { color: var(--gold); }
+
+  .pkg-btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all .25s;
+  }
+  .pkg-btn-cyan {
+    background: linear-gradient(135deg, rgba(0,245,255,.15), rgba(0,245,255,.05));
+    border: 1px solid rgba(0,245,255,.4);
+    color: var(--cyan);
+    box-shadow: 0 0 20px rgba(0,245,255,.1);
+  }
+  .pkg-btn-cyan:hover {
+    background: var(--cyan);
+    color: #000;
+    box-shadow: 0 0 40px rgba(0,245,255,.5);
+    transform: translateY(-2px);
+  }
+  .pkg-btn-gold {
+    background: linear-gradient(135deg, var(--gold), #ff9f00);
+    border: none;
+    color: #000;
+    box-shadow: 0 4px 20px rgba(255,215,0,.35);
+  }
+  .pkg-btn-gold:hover {
+    box-shadow: 0 8px 40px rgba(255,215,0,.55);
+    transform: translateY(-2px);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how {
+    padding: 80px 20px;
+  }
+
+  .steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .step {
+    flex: 1;
+    min-width: 200px;
+    max-width: 240px;
+    text-align: center;
+    padding: 32px 20px;
+    background: rgba(13,21,48,.7);
+    border: 1px solid rgba(0,245,255,.1);
+    border-radius: 16px;
+    position: relative;
+    transition: transform .3s;
+  }
+  .step:hover { transform: translateY(-5px); }
+
+  .step-num {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-size: 18px; font-weight: 700;
+    color: #000;
+    margin: 0 auto 16px;
+    box-shadow: 0 0 20px rgba(0,245,255,.4);
+  }
+
+  .step h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+    letter-spacing: .5px;
+  }
+  .step p { font-size: 13px; color: rgba(232,244,255,.55); line-height: 1.6; }
+
+  /* ── TRUST ── */
+  .trust {
+    padding: 60px 20px;
+    background: var(--dark2);
+  }
+
+  .trust-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .trust-item {
+    flex: 1;
+    min-width: 180px;
+    max-width: 220px;
+    padding: 24px 20px;
+    background: rgba(13,21,48,.8);
+    border: 1px solid rgba(0,245,255,.1);
+    border-radius: 14px;
+    text-align: center;
+    transition: border-color .3s;
+  }
+  .trust-item:hover { border-color: rgba(0,245,255,.3); }
+
+  .trust-icon { font-size: 32px; margin-bottom: 10px; display: block; }
+  .trust-item h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--cyan);
+    margin-bottom: 4px;
+  }
+  .trust-item p { font-size: 12px; color: rgba(232,244,255,.5); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { padding: 80px 20px; }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .testi-card {
+    background: rgba(13,21,48,.8);
+    border: 1px solid rgba(168,85,247,.15);
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    transition: transform .3s;
+  }
+  .testi-card:hover { transform: translateY(-4px); border-color: rgba(168,85,247,.3); }
+  .testi-card::before {
+    content: '"';
+    position: absolute;
+    top: 10px; left: 20px;
+    font-size: 60px;
+    color: var(--purple);
+    opacity: .3;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+
+  .testi-stars { color: var(--gold); font-size: 14px; margin-bottom: 12px; }
+  .testi-text { font-size: 14px; color: rgba(232,244,255,.7); line-height: 1.7; margin-bottom: 16px; }
+  .testi-author {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .testi-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: #000;
+    font-family: 'Orbitron', monospace;
+    flex-shrink: 0;
+  }
+  .testi-name { font-size: 14px; font-weight: 600; color: var(--white); }
+  .testi-handle { font-size: 11px; color: rgba(232,244,255,.4); }
+
+  /* ── FAQ ── */
+  .faq { padding: 80px 20px; background: var(--dark2); }
+  .faq-list { max-width: 720px; margin: 0 auto; }
+
+  .faq-item {
+    border: 1px solid rgba(0,245,255,.1);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color .3s;
+  }
+  .faq-item:hover { border-color: rgba(0,245,255,.25); }
+
+  .faq-q {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    background: rgba(13,21,48,.6);
+    user-select: none;
+    gap: 12px;
+  }
+  .faq-q .arrow {
+    color: var(--cyan);
+    font-size: 18px;
+    transition: transform .3s;
+    flex-shrink: 0;
+  }
+  .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease, padding .3s;
+    font-size: 14px;
+    color: rgba(232,244,255,.6);
+    line-height: 1.7;
+    background: rgba(13,21,48,.4);
+    padding: 0 24px;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 16px 24px; }
+
+  /* ── CONTACT / CTA BOTTOM ── */
+  .cta-bottom {
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bottom::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(37,211,102,.07) 0%, transparent 70%);
+  }
+
+  .cta-bottom h2 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(22px, 6vw, 40px);
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .cta-bottom p {
+    color: rgba(232,244,255,.55);
+    font-size: 15px;
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    position: relative;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff;
+    text-decoration: none;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 0 40px rgba(37,211,102,.4);
+    transition: all .25s;
+  }
+  .btn-whatsapp:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 0 70px rgba(37,211,102,.6); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1.5px solid rgba(0,245,255,.4);
+    color: var(--cyan);
+    text-decoration: none;
+    padding: 18px 36px;
+    border-radius: 50px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all .25s;
+    background: rgba(0,245,255,.04);
+  }
+  .btn-outline:hover { background: var(--cyan); color: #000; box-shadow: 0 0 40px rgba(0,245,255,.4); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 20px;
+    border-top: 1px solid rgba(0,245,255,.07);
+    text-align: center;
+    font-size: 12px;
+    color: rgba(232,244,255,.25);
+    letter-spacing: 1px;
+  }
+  footer strong { color: var(--cyan); }
+
+  /* ── FLOATING WHATSAPP ── */
+  .float-wa {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 100;
+    width: 62px; height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #25D366, #075E54);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 30px rgba(37,211,102,.5);
+    text-decoration: none;
+    transition: transform .25s, box-shadow .25s;
+    animation: pulse-wa 2.5s ease-in-out infinite;
+  }
+  .float-wa:hover { transform: scale(1.12); box-shadow: 0 6px 50px rgba(37,211,102,.7); }
+  @keyframes pulse-wa {
+    0%,100%{box-shadow:0 4px 30px rgba(37,211,102,.5)}
+    50%{box-shadow:0 4px 50px rgba(37,211,102,.8), 0 0 0 12px rgba(37,211,102,.1)}
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:600px){
+    .packages-grid { grid-template-columns: 1fr; }
+    .steps { flex-direction: column; align-items: center; }
+    .step { max-width: 100%; }
+    .logo-badge { letter-spacing: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- FLOATING WHATSAPP -->
+<a class="float-wa" href="https://wa.me/5511921285444" target="_blank" title="WhatsApp">
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.633 4.72 1.838 6.77L4 29l7.43-1.795A12.94 12.94 0 0016 27.998c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22.998c-1.98 0-3.934-.527-5.648-1.527l-.404-.24-4.41 1.065 1.094-4.302-.265-.42A10.955 10.955 0 015.002 15C5.002 8.924 9.925 4 16 4s10.998 4.924 10.998 11S22.075 25.998 16 25.998zm6.07-8.198c-.332-.166-1.97-.969-2.275-1.079-.305-.11-.527-.166-.748.166-.221.332-.857 1.079-1.052 1.3-.194.221-.387.248-.72.083-.332-.166-1.4-.517-2.667-1.645-.985-.877-1.65-1.961-1.844-2.293-.193-.332-.02-.512.146-.677.15-.149.332-.387.498-.58.167-.194.222-.332.332-.553.11-.222.055-.415-.028-.58-.083-.166-.748-1.808-1.025-2.476-.27-.65-.545-.562-.748-.572l-.636-.011c-.222 0-.581.083-.886.415-.305.332-1.163 1.135-1.163 2.769s1.19 3.213 1.356 3.437c.165.221 2.34 3.575 5.67 5.013.793.343 1.41.547 1.893.7.795.252 1.519.217 2.09.132.638-.096 1.97-.806 2.248-1.585.277-.778.277-1.444.194-1.585-.083-.138-.305-.22-.637-.387z"/>
+  </svg>
+</a>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-content">
+    <div class="logo-badge">DIEGO</div>
+    <div class="brand-sub">Criativa · Soluções Digitais</div>
+    <div class="tagline-bar">Transformando suas ideias em realidade!</div>
+    <p class="hero-desc">Canais do YouTube prontos, com inscritos reais e entrega imediata. Comece seu canal hoje mesmo com credibilidade e autoridade.</p>
+    <a class="hero-cta" href="https://wa.me/5511921285444" target="_blank">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="white"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.633 4.72 1.838 6.77L4 29l7.43-1.795A12.94 12.94 0 0016 27.998c6.627 0 12-5.373 12-12S22.627 3 16 3zm6.07 16.8c-.332-.166-1.97-.969-2.275-1.079-.305-.11-.527-.166-.748.166-.221.332-.857 1.079-1.052 1.3-.194.221-.387.248-.72.083-.332-.166-1.4-.517-2.667-1.645-.985-.877-1.65-1.961-1.844-2.293-.193-.332-.02-.512.146-.677.15-.149.332-.387.498-.58.167-.194.222-.332.332-.553.11-.222.055-.415-.028-.58-.083-.166-.748-1.808-1.025-2.476-.27-.65-.545-.562-.748-.572l-.636-.011c-.222 0-.581.083-.886.415-.305.332-1.163 1.135-1.163 2.769s1.19 3.213 1.356 3.437c.165.221 2.34 3.575 5.67 5.013.793.343 1.41.547 1.893.7.795.252 1.519.217 2.09.132.638-.096 1.97-.806 2.248-1.585.277-.778.277-1.444.194-1.585-.083-.138-.305-.22-.637-.387z"/></svg>
+      Falar no WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════ PACKAGES YOUTUBE ═══════════════ -->
+<section class="packages" id="pacotes">
+  <h2 class="section-title reveal">🚀 Canais YouTube Prontos Para Você</h2>
+  <p class="section-subtitle reveal">Escolha seu pacote e comece agora</p>
+
+  <div class="packages-grid">
+
+    <!-- PACOTE START -->
+    <div class="pkg-card reveal">
+      <span class="pkg-icon">🚀</span>
+      <div class="pkg-name">PACOTE START</div>
+      <div class="pkg-subs">Conta com +1.000 Inscritos</div>
+      <div class="pkg-price">
+        <span>R$</span>100
+        <small>/conta • entrega imediata</small>
+      </div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>+1.000 inscritos reais</li>
+        <li>Canal pronto para monetizar</li>
+        <li>Entrega em até 24h</li>
+        <li>Suporte via WhatsApp</li>
+        <li>100% Seguro e garantido</li>
+      </ul>
+      <a class="pkg-btn pkg-btn-cyan" href="https://wa.me/5511921285444?text=Quero+o+Pacote+Start+R%24100" target="_blank">Quero Este Pacote</a>
+    </div>
+
+    <!-- PACOTE EXPLOSÃO -->
+    <div class="pkg-card featured reveal">
+      <div class="pkg-badge">⭐ Melhor Custo-Benefício</div>
+      <span class="pkg-icon">💥</span>
+      <div class="pkg-name">PACOTE EXPLOSÃO</div>
+      <div class="pkg-subs">Conta com +3.000 Inscritos</div>
+      <div class="pkg-price">
+        <span>R$</span>120
+        <small>/conta • entrega imediata</small>
+      </div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>+3.000 inscritos reais</li>
+        <li>Autoridade e credibilidade</li>
+        <li>Entrega em até 24h</li>
+        <li>Suporte VIP via WhatsApp</li>
+        <li>100% Seguro e garantido</li>
+      </ul>
+      <a class="pkg-btn pkg-btn-gold" href="https://wa.me/5511921285444?text=Quero+o+Pacote+Explos%C3%A3o+R%24120" target="_blank">Quero Este Pacote</a>
+    </div>
+
+    <!-- OUTROS VALORES -->
+    <div class="pkg-card reveal">
+      <span class="pkg-icon">💬</span>
+      <div class="pkg-name">OUTROS VALORES</div>
+      <div class="pkg-subs">Tem interesse em outro volume?</div>
+      <div class="pkg-price" style="font-size:32px;padding-top:8px;">
+        Chame no<br>
+        <small style="font-size:18px;color:var(--cyan);font-family:'Rajdhani',sans-serif;letter-spacing:1px;">PRIVADO 📲</small>
+      </div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>Valores especiais negociáveis</li>
+        <li>Qualquer volume de inscritos</li>
+        <li>Condições exclusivas</li>
+        <li>Atendimento personalizado</li>
+        <li>Resposta rápida no WhatsApp</li>
+      </ul>
+      <a class="pkg-btn pkg-btn-cyan" href="https://wa.me/5511921285444?text=Ol%C3%A1+Diego%2C+quero+saber+sobre+outros+valores" target="_blank">Chamar no Privado</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ CAPCUT PRO ═══════════════ -->
+<section class="packages" id="capcut" style="padding-top:0;">
+  <h2 class="section-title reveal">🎬 CapCut Pro</h2>
+  <p class="section-subtitle reveal">edite seus vídeos como um profissional</p>
+
+  <div style="max-width:420px;margin:0 auto;">
+    <div class="pkg-card featured reveal" style="text-align:center;">
+      <div class="pkg-badge">🔥 Mais Vendido</div>
+      <span class="pkg-icon" style="font-size:56px;">✂️</span>
+      <div class="pkg-name" style="font-size:28px;">CAPCUT PRO</div>
+      <p style="color:rgba(232,244,255,.6);font-size:14px;margin-bottom:16px;">Acesso completo a todas as ferramentas premium</p>
+      <div class="pkg-price" style="font-size:68px;">
+        <span>R$</span>5
+        <small>/acesso • entrega imediata</small>
+      </div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>Todos os filtros e efeitos PRO</li>
+        <li>Remoção de marca d'água</li>
+        <li>Templates exclusivos premium</li>
+        <li>Exportação em alta qualidade</li>
+        <li>Entrega imediata no WhatsApp</li>
+      </ul>
+      <a class="pkg-btn pkg-btn-gold" href="https://wa.me/5511921285444?text=Quero+o+CapCut+Pro+por+R%245" target="_blank">Quero por R$5 agora!</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TIKTOK ═══════════════ -->
+<section class="packages" id="tiktok" style="padding-top:0;">
+  <h2 class="section-title reveal">🎵 Contas TikTok</h2>
+  <p class="section-subtitle reveal">contas prontas para crescer • consulte disponibilidade</p>
+
+  <div class="packages-grid" style="max-width:800px;">
+
+    <div class="pkg-card reveal">
+      <span class="pkg-icon">⚡</span>
+      <div class="pkg-name" style="color:var(--cyan);">CONTA STARTER</div>
+      <p style="color:rgba(232,244,255,.55);font-size:13px;margin-bottom:16px;">Perfeita para quem está começando</p>
+      <div class="pkg-price" style="font-size:28px;color:var(--cyan);">
+        Consulte<br>
+        <small style="font-size:14px;color:rgba(232,244,255,.4);">preço no privado</small>
+      </div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>Seguidores orgânicos</li>
+        <li>Conta ativa e verificada</li>
+        <li>Entrega via WhatsApp</li>
+        <li>Suporte pós-venda</li>
+      </ul>
+      <a class="pkg-btn pkg-btn-cyan" href="https://wa.me/5511921285444?text=Quero+saber+sobre+contas+TikTok+Starter" target="_blank">Ver Preço</a>
+    </div>
+
+    <div class="pkg-card featured reveal">
+      <div class="pkg-badge">⭐ Mais Pedida</div>
+      <span class="pkg-icon">🔥</span>
+      <div class="pkg-name" style="color:var(--gold);">CONTA PREMIUM</div>
+      <p style="color:rgba(232,244,255,.55);font-size:13px;margin-bottom:16px;">Alto engajamento e autoridade</p>
+      <div class="pkg-price" style="font-size:28px;color:var(--gold);">
+        Consulte<br>
+        <small style="font-size:14px;color:rgba(232,244,255,.4);">preço no privado</small>
+      </div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>Alto número de seguidores</li>
+        <li>Engajamento elevado</li>
+        <li>Nicho definido</li>
+        <li>Conta monetizável</li>
+      </ul>
+      <a class="pkg-btn pkg-btn-gold" href="https://wa.me/5511921285444?text=Quero+saber+sobre+contas+TikTok+Premium" target="_blank">Ver Preço</a>
+    </div>
+
+  </div>
+
+  <p class="reveal" style="text-align:center;margin-top:24px;color:rgba(232,244,255,.4);font-size:13px;letter-spacing:1px;">💬 Preços sob consulta · Chame no WhatsApp para saber valores</p>
+</section>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section class="how" id="como-funciona">
+  <h2 class="section-title reveal">⚡ Como Funciona?</h2>
+  <p class="section-subtitle reveal">processo simples em 4 passos</p>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <h3>Escolha seu Pacote</h3>
+      <p>Selecione o plano que melhor se encaixa no seu objetivo.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <h3>Entre em Contato</h3>
+      <p>Mande uma mensagem no WhatsApp e confirme seu pedido com Diego.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <h3>Realize o Pagamento</h3>
+      <p>Pague com segurança via Pix, transferência ou cartão.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <h3>Receba seu Canal</h3>
+      <p>Entrega em até 24h. Seu canal pronto com inscritos!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TRUST ═══════════════ -->
+<section class="trust" id="garantias">
+  <h2 class="section-title reveal">🔒 Por que Confiar em Nós?</h2>
+  <p class="section-subtitle reveal">segurança e qualidade em cada entrega</p>
+  <div class="trust-grid">
+    <div class="trust-item reveal"><span class="trust-icon">🛡️</span><h4>100% Seguro</h4><p>Processo confiável e sem riscos para sua conta.</p></div>
+    <div class="trust-item reveal"><span class="trust-icon">⚡</span><h4>Entrega Imediata</h4><p>Seu canal entregue em até 24 horas.</p></div>
+    <div class="trust-item reveal"><span class="trust-icon">✅</span><h4>Inscritos Reais</h4><p>Contas com audiência genuína, não bots.</p></div>
+    <div class="trust-item reveal"><span class="trust-icon">🎧</span><h4>Suporte 24/7</h4><p>Diego disponível para te atender sempre.</p></div>
+    <div class="trust-item reveal"><span class="trust-icon">🔁</span><h4>Garantia</h4><p>Problema? Resolvemos sem burocracia.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="testimonials" id="depoimentos">
+  <h2 class="section-title reveal">💬 O que Dizem Nossos Clientes</h2>
+  <p class="section-subtitle reveal">resultados reais, clientes satisfeitos</p>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Comprei o Pacote Explosão e em menos de 12 horas já tinha meu canal com 3 mil inscritos. Diego é confiável demais! Recomendo 100%.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">R</div>
+        <div><div class="testi-name">Rodrigo M.</div><div class="testi-handle">Criador de Conteúdo · SP</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Precisava dar um boost no meu canal e o Pacote Start foi perfeito. Atendimento rápido, processo simples e entrega antes do prazo!</p>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div><div class="testi-name">Ana Paula S.</div><div class="testi-handle">YouTuber · RJ</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Fiz o pacote personalizado e Diego entendeu exatamente o que eu precisava. Excelente profissional! Já indiquei para vários amigos.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">M</div>
+        <div><div class="testi-name">Marcos T.</div><div class="testi-handle">Empreendedor Digital · MG</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<section class="faq" id="faq">
+  <h2 class="section-title reveal">❓ Perguntas Frequentes</h2>
+  <p class="section-subtitle reveal">tire todas as suas dúvidas</p>
+  <div class="faq-list">
+
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        É seguro comprar um canal? <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">Sim! Todo o processo é feito com máxima segurança. Trabalhamos com total transparência e garantimos a integridade da conta entregue.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Como funciona a entrega? <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">Após confirmação do pagamento, entregamos as credenciais do canal em até 24 horas diretamente pelo WhatsApp.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Os inscritos são reais? <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">Sim. Trabalhamos com contas que possuem inscritos orgânicos. Não utilizamos bots ou práticas que violam os termos do YouTube.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Quais formas de pagamento aceitas? <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">Aceitamos Pix, transferência bancária e cartão de crédito/débito. Entre em contato para mais detalhes.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Tem garantia caso ocorra algum problema? <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">Absolutamente! Oferecemos suporte pós-venda e garantimos resolver qualquer problema sem burocracia. Sua satisfação é nossa prioridade.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ CTA BOTTOM ═══════════════ -->
+<section class="cta-bottom">
+  <h2 class="reveal">Pronto para Decolar? 🚀</h2>
+  <p class="reveal">Entre em contato agora e garanta seu canal com inscritos reais.</p>
+  <div class="cta-buttons reveal">
+    <a class="btn-whatsapp" href="https://wa.me/5511921285444" target="_blank">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="white"><path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.633 4.72 1.838 6.77L4 29l7.43-1.795A12.94 12.94 0 0016 27.998c6.627 0 12-5.373 12-12S22.627 3 16 3zm6.07 16.8c-.332-.166-1.97-.969-2.275-1.079-.305-.11-.527-.166-.748.166-.221.332-.857 1.079-1.052 1.3-.194.221-.387.248-.72.083-.332-.166-1.4-.517-2.667-1.645-.985-.877-1.65-1.961-1.844-2.293-.193-.332-.02-.512.146-.677.15-.149.332-.387.498-.58.167-.194.222-.332.332-.553.11-.222.055-.415-.028-.58-.083-.166-.748-1.808-1.025-2.476-.27-.65-.545-.562-.748-.572l-.636-.011c-.222 0-.581.083-.886.415-.305.332-1.163 1.135-1.163 2.769s1.19 3.213 1.356 3.437c.165.221 2.34 3.575 5.67 5.013.793.343 1.41.547 1.893.7.795.252 1.519.217 2.09.132.638-.096 1.97-.806 2.248-1.585.277-.778.277-1.444.194-1.585-.083-.138-.305-.22-.637-.387z"/></svg>
+      11 92128-5444
+    </a>
+    <a class="btn-outline" href="#pacotes">Ver Pacotes</a>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  © 2025 <strong>Diego Criativa – Soluções Digitais</strong> · YouTube · Entrega Imediata · 100% Seguro
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>
